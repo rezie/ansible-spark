@@ -1,6 +1,6 @@
 # ansible-spark
 
-An Ansible role for installing [Apache Spark](https://spark.apache.org).
+Ansible roles for installing [Apache Spark](https://spark.apache.org) in standalone or clustered modes
 
 ## Role Variables
 
@@ -12,6 +12,9 @@ An Ansible role for installing [Apache Spark](https://spark.apache.org).
 - `spark_user_groups` - an optional list of (OS)groups the spark user should belong to
 - `spark_user_shell` - the spark user's default shell (default: `/bin/false`)
 
-## Example Playbook
+## Quick Start
 
-See the [examples](./examples/) directory.
+- Edit the `group_vars/all` file to provide the Zookeeper's hostname and port
+- Edit the `hosts` file to provide the host names for the masters and nodes
+- Edit the `site.yml` file to run the desired role
+- Call `site.yml` via `ansible-playbook -i hosts site.yml`
