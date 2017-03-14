@@ -70,10 +70,10 @@
 
 - name: Start the master hosts
   command: ./sbin/start-master.sh
-  hosts: masters
+  when: inventory_hostname in groups['masters']
   tags: ["initialize"]
 
 - name: Start the node hosts
   command: ./sbin/start-slave.sh spark://{{ groups['masters'] | join(',') }}
-  hosts: nodes
+  when: inventory_hostname in groups['nodes']
   tags: ["initialize"]
