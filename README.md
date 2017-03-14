@@ -14,7 +14,14 @@ Ansible roles for installing [Apache Spark](https://spark.apache.org) in standal
 
 ## Quick Start
 
-- Edit the `group_vars/all` file to provide the Zookeeper's hostname and port
-- Edit the `hosts` file to provide the host names for the masters and nodes
-- Edit the `site.yml` file to run the desired role
-- Call `site.yml` via `ansible-playbook -i hosts site.yml`
+There are a few files that needs to be prepared first
+
+1. `group_vars/all` 
+  - Provide the Zookeeper's hostname and port
+  - Provide the ssh user that ansible should log in as
+2. `hosts` 
+  - Provide the host names for the masters and nodes
+3. `site.yml` 
+  - Provide the name of the role(s) to be executed
+
+Then call `site.yml` via `ansible-playbook -i hosts site.yml`. You may be prompted to update your known_hosts file, if you have yet to `ssh` into the target hosts previously.
