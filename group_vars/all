@@ -1,1 +1,7 @@
+# Zookeeper
+
 zookeeper_host: host:port
+
+# Spark worker
+
+spark_worker_port: 8888

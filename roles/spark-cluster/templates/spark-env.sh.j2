@@ -60,6 +60,8 @@ export SPARK_PID_DIR=${SPARK_PID_DIR:-{{ spark_run_dir }}}
 
 export SPARK_DAEMON_JAVA_OPTS: -Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url={{ zookeeper_host }}
 
+export SPARK_WORKER_PORT={{ spark_worker_port }}
+
 {% for key, value in spark_env_extras.items() | sort %}
 export {{ key }}="{{ value }}"
 {% endfor %}
