@@ -12,7 +12,6 @@ spark_user: "spark"           # the name of the (OS)user created for spark
 spark_user_groups: []         # Optional list of (OS)groups the new spark user should belong to
 spark_user_shell: "/bin/bash"    # the spark user's default shell
 
-spark_env_extras:
-  - SPARK_DAEMON_JAVA_OPTS: '-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url=host:port,host:port,host:port'
+spark_env_extras: {}
   
 spark_defaults_extras: {}

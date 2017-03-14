@@ -56,6 +56,10 @@ export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-/etc/hadoop/conf}
 export SPARK_LOG_DIR=${SPARK_LOG_DIR:-{{ spark_log_dir }}}
 export SPARK_PID_DIR=${SPARK_PID_DIR:-{{ spark_run_dir }}}
 
+#  - SPARK_DAEMON_JAVA_OPTS: '-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url=host:port,host:port,host:port'
+
+export SPARK_DAEMON_JAVA_OPTS: -Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.deploy.zookeeper.url={{ zookeeper_host }}
+
 {% for key, value in spark_env_extras.items() | sort %}
 export {{ key }}="{{ value }}"
 {% endfor %}

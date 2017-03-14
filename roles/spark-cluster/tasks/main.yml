@@ -63,12 +63,17 @@
             dest="{{ spark_usr_parent_dir }}/spark-{{ spark_version }}/conf/spark-defaults.conf"
   tags: ["config"]
 
+- name: Configure Spark slaves file
+  template: src=slaves.j2
+            dest="{{ spark_conf_dir }}/slaves"
+  tags: ["config"]
+
 - name: Start the master hosts
   command: ./sbin/start-master.sh
   hosts: masters
   tags: ["initialize"]
 
 - name: Start the node hosts
-  command: ./sbin/start-slave.sh spark://{{}}
+  command: ./sbin/start-slave.sh spark://{{ groups['masters'] | join(',') }}
   hosts: nodes
   tags: ["initialize"]
