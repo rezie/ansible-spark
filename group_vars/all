@@ -1,3 +1,8 @@
+# ssh configuration
+
+# Ansible 2.0 and later only. Defaults to null
+# ansible_user: username
+
 # Zookeeper
 
 zookeeper_host: host:port
