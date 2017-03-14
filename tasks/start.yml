@@ -1,0 +1,9 @@
+---
+
+- name: Start the master hosts
+  shell: ./sbin/start-master.sh
+  hosts: masters
+
+- name: Start the node hosts
+  shell: ./sbin/start-slave.sh spark://{{}}
+  hosts: nodes
