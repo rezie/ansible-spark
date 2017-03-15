@@ -17,6 +17,6 @@
 
 # A Spark Worker will be started on each of the machines listed below.
 
-{% for host in groups['workers'] %}
+{% for host in groups['nodes'] %}
 {{ host }}
 {% endfor %}
