@@ -30,14 +30,14 @@
 - name: Download Spark distribution
   get_url: url="{{ spark_mirror }}/spark-{{ spark_version }}.tgz"
            dest="{{ spark_src_dir }}/spark-{{ spark_version }}.tgz"
-  when: spark_downloaded|failed
+  when: spark_downloaded.stat.exists == False
 
 - name: Extract Spark distribution
   unarchive: src="{{ spark_src_dir }}/spark-{{ spark_version }}.tgz"
              dest="{{ spark_usr_parent_dir }}"
              copy=no
              creates="{{ spark_usr_parent_dir }}/spark-{{ spark_version }}"
-  when: spark_downloaded|failed
+  when: spark_downloaded.stat.exists == True
 
 - name: Setup Spark distribution symlinks
   file: src="{{ item.src }}"
@@ -74,12 +74,19 @@
             dest="{{ spark_conf_dir }}/slaves"
   tags: ["config"]
 
+- name: Stop all running instances
+  command: "{{ spark_usr_dir }}/sbin/stop-all.sh"
+  tags: ["initialize"]
+
 - name: Start the master hosts
   command: "{{ spark_usr_dir }}/sbin/start-master.sh"
   when: inventory_hostname in groups['masters']
+  register: master-out
   tags: ["initialize"]
 
+
 - name: Start the node hosts
-  command: "{{ spark_usr_dir }}/sbin/start-slave.sh spark://{{ groups['masters'] | join(',') }}"
+  command: "{{ spark_usr_dir }}/sbin/start-slave.sh {{ spark_addresses }}"
   when: inventory_hostname in groups['nodes']
+  register: node-out
   tags: ["initialize"]
