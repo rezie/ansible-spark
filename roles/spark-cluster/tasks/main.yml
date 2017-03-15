@@ -37,6 +37,7 @@
              dest="{{ spark_usr_parent_dir }}"
              copy=no
              creates="{{ spark_usr_parent_dir }}/spark-{{ spark_version }}"
+  when: spark_downloaded|failed
 
 - name: Setup Spark distribution symlinks
   file: src="{{ item.src }}"
@@ -74,11 +75,11 @@
   tags: ["config"]
 
 - name: Start the master hosts
-  command: {{ spark_usr_dir }}/sbin/start-master.sh
+  command: "{{ spark_usr_dir }}/sbin/start-master.sh"
   when: inventory_hostname in groups['masters']
   tags: ["initialize"]
 
 - name: Start the node hosts
-  command: {{ spark_usr_dir }}/sbin/start-slave.sh spark://{{ groups['masters'] | join(',') }}
+  command: "{{ spark_usr_dir }}/sbin/start-slave.sh spark://{{ groups['masters'] | join(',') }}"
   when: inventory_hostname in groups['nodes']
   tags: ["initialize"]
