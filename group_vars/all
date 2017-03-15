@@ -2,6 +2,8 @@
 
 # Ansible 2.0 and later only. Defaults to null
 # ansible_user: username
+# ansible_become: true
+
 
 # Zookeeper
 

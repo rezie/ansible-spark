@@ -9,4 +9,5 @@
       "spark.eventLog.enabled": "true"
       "spark.eventLog.disabled": "true"
   roles:
+    - common
     - spark-cluster

@@ -23,9 +23,14 @@
     - "{{ spark_log_dir }}"
     - "{{ spark_run_dir }}"
 
+- name: Ensure Spark binaries exist
+  stat: path={{ spark_src_dir }}/spark-{{ spark_version }}.tgz
+  register: spark_downloaded
+
 - name: Download Spark distribution
   get_url: url="{{ spark_mirror }}/spark-{{ spark_version }}.tgz"
            dest="{{ spark_src_dir }}/spark-{{ spark_version }}.tgz"
+  when: spark_downloaded|failed
 
 - name: Extract Spark distribution
   unarchive: src="{{ spark_src_dir }}/spark-{{ spark_version }}.tgz"
@@ -69,11 +74,11 @@
   tags: ["config"]
 
 - name: Start the master hosts
-  command: ./sbin/start-master.sh
+  command: {{ spark_usr_dir }}/sbin/start-master.sh
   when: inventory_hostname in groups['masters']
   tags: ["initialize"]
 
 - name: Start the node hosts
-  command: ./sbin/start-slave.sh spark://{{ groups['masters'] | join(',') }}
+  command: {{ spark_usr_dir }}/sbin/start-slave.sh spark://{{ groups['masters'] | join(',') }}
   when: inventory_hostname in groups['nodes']
   tags: ["initialize"]
